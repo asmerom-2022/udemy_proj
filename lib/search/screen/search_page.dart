@@ -1,26 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_prac/common/constants/constants.dart';
 
-import '../../featured/screen/featured_page.dart';
+import '../../featured/components/widgets.dart';
 
-// class SearchPage extends ConsumerWidget {
-//   const SearchPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Padding(
-//       padding: EdgeInsets.only(top: 64, right: 16, left: 16),
-//       child: Column(
-//         children: [
-//           Text(
-//             'this is search page',
-//             style: TextStyle(fontSize: 16, color: Colors.white),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

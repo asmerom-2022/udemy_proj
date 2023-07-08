@@ -8,9 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:udemy_prac/common/constants/constants.dart';
 
 import '../../authenticate/controller/login_controller.dart';
+import '../../common/error_widget.dart';
 import '../../common/vplayer/new player/player_page.dart';
 import '../../common/vplayer/new player/vidplyer_page.dart';
 import '../../common/vplayer/vplayer.dart';
+import '../components/widgets.dart';
+import '../controller/featured_ctrl.dart';
 
 class FeaturedPage extends ConsumerWidget {
   FeaturedPage({super.key});
@@ -19,11 +22,13 @@ class FeaturedPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final course = ref.watch(featuredprovider);
     final String email = users.email.toString();
     final userData =
         FirebaseFirestore.instance.collection('users').doc(email).snapshots();
     print('user is $users');
     log('user is $users');
+    log('course is $course');
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 64, right: 8),
@@ -59,16 +64,19 @@ class FeaturedPage extends ConsumerWidget {
                   Recomended_widget(
                     title: 'HTML and CSS tutorial',
                     instructor: 'thomas fiber',
+                    imageURL: 'https://firebasestorage.googleapis.com/v0/b/udemy-proj-2c8cc.appspot.com/o/images%2Fonline_course.png?alt=media&token=ca7a4b7f-d98d-4d49-b5cc-cf959f1cdf52',
                   ),
                   SizedBox(width: 8),
                   Recomended_widget(
                     title: 'AWS Certified cloud practitioneer',
                     instructor: ' stephene mark',
+                    imageURL: 'https://firebasestorage.googleapis.com/v0/b/udemy-proj-2c8cc.appspot.com/o/images%2Fonline_course.png?alt=media&token=ca7a4b7f-d98d-4d49-b5cc-cf959f1cdf52',
                   ),
                   SizedBox(width: 8),
                   Recomended_widget(
                     title: 'cloud competing Certified tutorial for begginer',
                     instructor: 'imam teli',
+                    imageURL: 'https://firebasestorage.googleapis.com/v0/b/udemy-proj-2c8cc.appspot.com/o/images%2Fonline_course.png?alt=media&token=ca7a4b7f-d98d-4d49-b5cc-cf959f1cdf52',
                   ),
                 ],
               ),
@@ -82,17 +90,45 @@ class FeaturedPage extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             TitleText('popular for advancing devops Engineers'),
-            const SingleChildScrollView(
-              child: Row(
-                children: [
-                  Recomended_widget(
-                    title:
-                        'flutter full tutorial for beginner to connect with back end',
-                    instructor: 'edison hammer',
-                  ),
-                ],
-              ),
+            //  Row(
+            //    children: [
+                 course.when(data: (data){
+return Container(
+            height: MediaQuery.of(context).size.height,
+            // margin: const EdgeInsets.only(bottom: 8),
+            child: ListView(
+             children: [
+             
+               Container(
+            
+                 height: MediaQuery.of(context).size.height * 0.8,
+                 child: GridView.builder(
+                   itemCount: data.length,
+                   gridDelegate:
+                       const SliverGridDelegateWithFixedCrossAxisCount(
+                           crossAxisCount: 2,
+                           crossAxisSpacing: 4,
+                           mainAxisSpacing: 8),
+                   itemBuilder: (context, index) {
+                     return Recomended_widget(
+                     title: data[index].title!,
+                     instructor: data[index].instructor! ,
+                     imageURL: data[index].imageURL! ,
+                     );
+                   },
+                 ),
+               )
+             ],
             ),
+          );
+                 }, 
+                 error: (Object error, StackTrace stackTrace) {
+          return AdminErrorWidget(message: error.toString());
+        },
+        loading: () {
+          return const LoadingWidget();
+        },
+                 ),
             SizedBox(
               width: 300,
               child: ElevatedButton(
@@ -108,94 +144,5 @@ class FeaturedPage extends ConsumerWidget {
   }
 }
 
-class categories extends StatelessWidget {
-  const categories({
-    super.key,
-    required this.label,
-  });
 
-  final String label;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.all(4),
-      height: 50,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.white54,
-          width: 2.0,
-        ),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: Center(
-          child: Text(
-        label,
-        style: const TextStyle(color: Colors.white54),
-      )),
-    );
-  }
-}
 
-class Recomended_widget extends StatelessWidget {
-  const Recomended_widget({
-    super.key,
-    required this.title,
-    this.instructor,
-  });
-  final String title;
-  final String? instructor;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:(){
-                       Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  VideoPlayer()),
-  );
-                    },
-      child: SizedBox(
-        width: 200,
-        height: 250,
-        child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: primaryColor,
-              ),
-              child: Image.network(
-                  'https://media.istockphoto.com/photos/excited-woman-wearing-rainbow-cardigan-picture-id1327495437',
-                  fit: BoxFit.fill),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Column(
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontFamily: GoogleFonts.workSans().fontFamily,
-                    ),
-                  ),
-                  Text(
-                    instructor!,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontFamily: GoogleFonts.workSans().fontFamily,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
