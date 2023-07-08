@@ -8,6 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:udemy_prac/common/constants/constants.dart';
 
 import '../../authenticate/controller/login_controller.dart';
+import '../../common/vplayer/new player/player_page.dart';
+import '../../common/vplayer/new player/vidplyer_page.dart';
+import '../../common/vplayer/vplayer.dart';
 
 class FeaturedPage extends ConsumerWidget {
   FeaturedPage({super.key});
@@ -48,6 +51,7 @@ class FeaturedPage extends ConsumerWidget {
               'Recommended for you',
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
+          
             const SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -144,45 +148,53 @@ class Recomended_widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 250,
-      child: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: primaryColor,
+    return GestureDetector(
+      onTap:(){
+                       Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  VideoPlayer()),
+  );
+                    },
+      child: SizedBox(
+        width: 200,
+        height: 250,
+        child: Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: primaryColor,
+              ),
+              child: Image.network(
+                  'https://media.istockphoto.com/photos/excited-woman-wearing-rainbow-cardigan-picture-id1327495437',
+                  fit: BoxFit.fill),
             ),
-            child: Image.network(
-                'https://media.istockphoto.com/photos/excited-woman-wearing-rainbow-cardigan-picture-id1327495437',
-                fit: BoxFit.fill),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Column(
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontFamily: GoogleFonts.workSans().fontFamily,
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Column(
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.workSans().fontFamily,
+                    ),
                   ),
-                ),
-                Text(
-                  instructor!,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontFamily: GoogleFonts.workSans().fontFamily,
+                  Text(
+                    instructor!,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.workSans().fontFamily,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
