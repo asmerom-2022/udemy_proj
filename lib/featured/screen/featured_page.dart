@@ -1,17 +1,11 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:udemy_prac/common/constants/constants.dart';
 
 import '../../authenticate/controller/login_controller.dart';
 import '../../common/error_widget.dart';
-import '../../common/vplayer/new player/player_page.dart';
-import '../../common/vplayer/new player/vidplyer_page.dart';
-import '../../common/vplayer/vplayer.dart';
 import '../components/widgets.dart';
 import '../controller/featured_ctrl.dart';
 
@@ -26,9 +20,7 @@ class FeaturedPage extends ConsumerWidget {
     final String email = users.email.toString();
     final userData =
         FirebaseFirestore.instance.collection('users').doc(email).snapshots();
-    print('user is $users');
-    log('user is $users');
-    log('course is $course');
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 64, right: 8),
@@ -43,12 +35,12 @@ class FeaturedPage extends ConsumerWidget {
                 )),
             const SizedBox(height: 16),
             const Text(
-              'the udemy pracice is coming soon',
+              'the udemy practice is coming soon',
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
             const SizedBox(height: 16),
             const Text(
-              'we will realease on the next few months and you can use as you want .....',
+              'we will release on the next few months and you can use as you want .....',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             const SizedBox(height: 16),
@@ -68,14 +60,14 @@ class FeaturedPage extends ConsumerWidget {
                   ),
                   SizedBox(width: 8),
                   Recomended_widget(
-                    title: 'AWS Certified cloud practitioneer',
-                    instructor: ' stephene mark',
+                    title: 'AWS Certified cloud practitioner',
+                    instructor: ' stephen mark',
                     imageURL: 'https://firebasestorage.googleapis.com/v0/b/udemy-proj-2c8cc.appspot.com/o/images%2Fonline_course.png?alt=media&token=ca7a4b7f-d98d-4d49-b5cc-cf959f1cdf52',
                   ),
                   SizedBox(width: 8),
                   Recomended_widget(
-                    title: 'cloud competing Certified tutorial for begginer',
-                    instructor: 'imam teli',
+                    title: 'cloud competing Certified tutorial for beginner',
+                    instructor: 'imam telia',
                     imageURL: 'https://firebasestorage.googleapis.com/v0/b/udemy-proj-2c8cc.appspot.com/o/images%2Fonline_course.png?alt=media&token=ca7a4b7f-d98d-4d49-b5cc-cf959f1cdf52',
                   ),
                 ],
@@ -90,17 +82,12 @@ class FeaturedPage extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             TitleText('popular for advancing devops Engineers'),
-            //  Row(
-            //    children: [
-                 course.when(data: (data){
-return Container(
+          course.when(data: (data){
+          return SizedBox(
             height: MediaQuery.of(context).size.height,
-            // margin: const EdgeInsets.only(bottom: 8),
             child: ListView(
              children: [
-             
-               Container(
-            
+                Container(
                  height: MediaQuery.of(context).size.height * 0.8,
                  child: GridView.builder(
                    itemCount: data.length,

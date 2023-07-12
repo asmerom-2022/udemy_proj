@@ -33,7 +33,7 @@ class VideoPlayerWidget extends ConsumerWidget {
           VideoProgressIndicator(
             videoController,
             allowScrubbing: true,
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
           ),
           IconButton(
             icon: Icon(

@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:video_player/video_player.dart';
-import 'player_page.dart';
+import 'player_widget.dart';
 import 'provider.dart';
 
 class VideoPlayer extends ConsumerStatefulWidget {
@@ -28,6 +26,7 @@ class _VideoPlayerState extends ConsumerState<VideoPlayer> {
       //   title: 'Trailer',
       //   isCenterTile: true,
       // ),
+      appBar: AppBar(),
       body: videoPlayerController.when(
         data: (data) {
           return GestureDetector(

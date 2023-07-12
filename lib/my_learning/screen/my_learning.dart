@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_prac/common/constants/constants.dart';
-import 'package:udemy_prac/featured/screen/featured_page.dart';
 
 import '../../common/colors.dart';
 import '../../featured/components/widgets.dart';
